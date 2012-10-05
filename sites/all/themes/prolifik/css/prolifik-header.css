@@ -1,0 +1,78 @@
+/* @override 
+	http://add.lightyourmusic.com/sites/all/themes/prolifik/css/prolifik-header.css?macqsw
+	http://add.lightyourmusic.com/sites/all/themes/prolifik/css/prolifik-header.css?malf5d
+*/
+
+#section-header {
+  position: relative;
+
+}
+
+#zone-header {
+}
+
+#zone-header-wrapper {
+  position: relative;
+  min-height: 35px;
+	background: url(../images/header_back.png) repeat-x;
+}
+
+/* Featured (Rotating Banner) */
+#zone-header .views_slideshow_cycle_main {
+  -moz-box-shadow: 0 0 20px #aaa;
+  -o-box-shadow: 0 0 20px #aaa;
+  -khtml-box-shadow: 0 0 20px #aaa;
+  -webkit-box-shadow: 0 0 20px #aaa;
+  box-shadow: 0 0 20px #aaa;
+  -moz-box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  -o-box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  -khtml-box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+#zone-header .views-slideshow-cycle-main-frame,
+#zone-header .views-slideshow-cycle-main-frame-row,
+#zone-header .views-slideshow-cycle-main-frame-row img {
+
+}
+#zone-header .views-slideshow-cycle-main-frame-row,
+#zone-header .views-slideshow-cycle-main-frame-row img {
+  height: auto !important;
+}
+/* Text */
+#zone-header .rotating-banner .banner-text {
+
+}
+#zone-header .rotating-banner .banner-text .banner-title {
+}
+#zone-header .rotating-banner .banner-text .banner-body {
+}
+/* Controls */
+#zone-header .views-slideshow-controls-bottom .widget_pager {
+  position: absolute;
+  right: -10px;
+  text-align: center;
+  top: 10px;
+  z-index: 100;
+  *zoom: 1;
+}
+#zone-header .views-slideshow-controls-bottom .widget_pager .views_slideshow_pager_field_item {
+  background: #489ec8;
+  border: 2px solid #fff;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  -khtml-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  display: block;
+  display: inline-block;
+  height: 10px;
+  width: 10px;
+  *display: inline;
+  *zoom: 1;
+}
+#zone-header .views-slideshow-controls-bottom .widget_pager .views_slideshow_pager_field_item.active {
+  background: #f8992b;
+}

@@ -1,0 +1,121 @@
+/* @override http://add.lightyourmusic.com/sites/all/themes/prolifik/css/prolifik-footer.css?mbdwod */
+
+/* Footer */
+
+#section-footer {
+	background: url(../images/postfix_ribbon_top.jpg) repeat-x;
+	padding-top: 20px;
+}
+
+/* @group Footer Top Ribbon
+ */
+
+#region-footer-top {
+	height: 118px;
+	position: relative;
+	z-index: 99;
+	bottom: 76px;
+	right: 62px;
+}
+div.postfix-tag {
+	position: relative;
+	z-index: 999;
+	color: white;
+	text-transform: uppercase;
+	text-align: center;
+	bottom: 102px;
+	font-size: 4em;
+}
+
+#block-block-3 div.content p {
+	text-align: center;
+}
+
+
+/* @end */
+
+#zone-footer-wrapper {
+  z-index: 1;
+	padding-top: 10px;
+	-webkit-box-shadow: #666 0px 0px 10px;
+-moz-box-shadow: #666 0px 0px 10px;
+box-shadow: #666 0px 0px 10px;
+background: #874100; /* Old browsers */
+/* IE9 SVG, needs conditional override of 'filter' to 'none' */
+background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPHJhZGlhbEdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgY3g9IjUwJSIgY3k9IjUwJSIgcj0iNzUlIj4KICAgIDxzdG9wIG9mZnNldD0iNDAlIiBzdG9wLWNvbG9yPSIjODc0MTAwIiBzdG9wLW9wYWNpdHk9IjEiLz4KICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzRmMjcwMCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgPC9yYWRpYWxHcmFkaWVudD4KICA8cmVjdCB4PSItNTAiIHk9Ii01MCIgd2lkdGg9IjEwMSIgaGVpZ2h0PSIxMDEiIGZpbGw9InVybCgjZ3JhZC11Y2dnLWdlbmVyYXRlZCkiIC8+Cjwvc3ZnPg==);
+background: -moz-radial-gradient(center, ellipse cover,  #874100 40%, #4f2700 100%); /* FF3.6+ */
+background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(40%,#874100), color-stop(100%,#4f2700)); /* Chrome,Safari4+ */
+background: -webkit-radial-gradient(center, ellipse cover,  #874100 40%,#4f2700 100%); /* Chrome10+,Safari5.1+ */
+background: -o-radial-gradient(center, ellipse cover,  #874100 40%,#4f2700 100%); /* Opera 12+ */
+background: -ms-radial-gradient(center, ellipse cover,  #874100 40%,#4f2700 100%); /* IE10+ */
+background: radial-gradient(ellipse at center,  #874100 40%,#4f2700 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#874100', endColorstr='#4f2700',GradientType=1 ); /* IE6-8 fallback on horizontal gradient */
+
+}
+#zone-footer-wrapper a,
+#zone-footer-wrapper a:link
+#zone-footer-wrapper a:visited {
+  color: #fff;
+}
+#zone-footer-wrapper .block .content {
+  color: black;
+}
+#zone-footer-wrapper div.block-title {
+  margin: 15px 0;
+}
+#zone-footer-wrapper div.block-title h2.block-title div.separator {
+  background-image: url(../images/separator-white.png);
+}
+#zone-footer-wrapper p {
+  margin: 0;
+  padding: 0;
+  color: white;
+}
+#region-footer-first,
+#region-footer-second {
+  margin: 0;
+  padding-bottom: 20px;
+  padding-top: 10px;
+}
+#region-footer-bottom {
+  margin: 0;
+  padding: 20px 0;
+  width: 100%;
+}
+#region-footer-bottom .region-inner {
+  padding: 0 20px;
+}
+#region-footer-bottom img {
+  vertical-align: middle;
+}
+#region-footer-bottom img.levelten {
+  position: relative;
+  top: 2px;
+}
+
+/* Legal Notices Menu */
+#region-footer-bottom .block {
+  float: left;
+}
+#region-footer-bottom #block-menu-menu-legal-notices {
+  float: right;
+}
+#region-footer-bottom #block-menu-menu-legal-notices .block-title {
+  display: none;
+}
+#region-footer-bottom #block-menu-menu-legal-notices li {
+  background: none;
+  float: left;
+  list-style: none;
+}
+
+body > #page #zone-footer h1, body > #page #zone-footer h2, body > #page #zone-footer h3,
+body > #page #zone-footer h4, body > #page #zone-footer h5, body > #page #zone-footer h6, #zone-footer div.block-title {
+  color: #fff;
+	margin-bottom: 0;
+	margin-top: 0;
+}
+
+#zone-footer label {
+	color: white;
+}
