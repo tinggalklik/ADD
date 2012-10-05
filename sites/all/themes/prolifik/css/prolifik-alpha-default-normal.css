@@ -3,8 +3,12 @@
 /* This file will hold styles that are loaded using the same media query as the normal grid. */
 
 #logo {
+<<<<<<< HEAD
 	position: absolute;
 	z-index: 999;
+=======
+  width: 250px;
+>>>>>>> 7ea3841476932c9f97e3ab3fd0ccf15bc2285d0e
 }
 
 /* Search Form */

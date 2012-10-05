@@ -1,10 +1,18 @@
 /* @override 
+<<<<<<< HEAD
 	http://add.lightyourmusic.com/sites/all/themes/prolifik/css/prolifik-branding.css?macqsw
 	http://add.lightyourmusic.com/sites/all/themes/prolifik/css/prolifik-branding.css?malf5d
+=======
+	http://hilton.loc/sites/all/themes/navin/css/prolifik-branding.css?m5bgn5
+	http://btcv.biz/sites/all/themes/prolifik/css/prolifik-branding.css?m5f2cd
+	http://shs.loc/sites/all/themes/prolifik/css/prolifik-branding.css?m67bl9
+	http://zprobase.loc/sites/all/themes/prolifik/css/prolifik-branding.css?m7rzjd
+>>>>>>> 7ea3841476932c9f97e3ab3fd0ccf15bc2285d0e
 */
 
 /* Branding */
 #zone-branding-wrapper {
+<<<<<<< HEAD
 background: #ffb700;
 background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmYjcwMCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iI2UwOTUwMCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNjZjg5MDAiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
 background: -moz-linear-gradient(top,  #ffb700 0%, #e09500 50%, #cf8900 100%);
@@ -14,6 +22,9 @@ background: -o-linear-gradient(top,  #ffb700 0%,#e09500 50%,#cf8900 100%);
 background: -ms-linear-gradient(top,  #ffb700 0%,#e09500 50%,#cf8900 100%);
 background: linear-gradient(to bottom,  #ffb700 0%,#e09500 50%,#cf8900 100%);
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffb700', endColorstr='#cf8900',GradientType=0 );
+=======
+
+>>>>>>> 7ea3841476932c9f97e3ab3fd0ccf15bc2285d0e
 	}
 #zone-branding {
   position: relative;
@@ -25,17 +36,30 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffb700', end
   position: relative;
 }
 #region-branding .region-inner {
+<<<<<<< HEAD
   padding: 20px; min-height: 37px;
 }
 
 .logo-img {
+=======
+  padding: 20px;
+	background-color: white;
+}
+
+.logo-img {
+  float: none;
+>>>>>>> 7ea3841476932c9f97e3ab3fd0ccf15bc2285d0e
   margin: 0;
   text-align: center;
 }
 
 #logo {
+<<<<<<< HEAD
 	position: absolute;
 	top: 0;
+=======
+  width: 250px;
+>>>>>>> 7ea3841476932c9f97e3ab3fd0ccf15bc2285d0e
 }
 
 /* Search Form */

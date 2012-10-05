@@ -1,7 +1,14 @@
 /* @override 
+<<<<<<< HEAD
 	http://add.lightyourmusic.com/sites/all/themes/prolifik/css/prolifik-menu.css?macqsw
 	http://add.lightyourmusic.com/sites/all/themes/prolifik/css/prolifik-menu.css?malf5d
 	http://add.lightyourmusic.com/sites/all/themes/prolifik/css/prolifik-menu.css?mbdwod
+=======
+	http://hilton.loc/sites/all/themes/navin/css/prolifik-menu.css?m5bgn5
+	http://hilton.loc/sites/all/themes/navin/css/prolifik-menu.css?m5cpcl
+	http://btcv.biz/sites/all/themes/prolifik/css/prolifik-menu.css?m5f2cd
+	http://hi-express.loc/sites/all/themes/navin/css/prolifik-menu.css?m5pnkk
+>>>>>>> 7ea3841476932c9f97e3ab3fd0ccf15bc2285d0e
 */
 
 /* Menu */
@@ -32,6 +39,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0e3c7a', end
 #region-menu .region-inner {
   margin: 0 -10px;
 }
+<<<<<<< HEAD
 
 /* @group Block Menu */
 
@@ -77,6 +85,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0e3c7a', end
 
 
 /* @end */
+=======
+>>>>>>> 7ea3841476932c9f97e3ab3fd0ccf15bc2285d0e
 #region-menu nav > ul.menu > li {
   background: none;
   float: none;

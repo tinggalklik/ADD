@@ -1,5 +1,8 @@
+<<<<<<< HEAD
 /* @override http://add.lightyourmusic.com/sites/all/themes/prolifik/css/prolifik-alpha-default-narrow.css?macqsw */
 
+=======
+>>>>>>> 7ea3841476932c9f97e3ab3fd0ccf15bc2285d0e
 /* This file will hold styles that are loaded using the same media query as the narrow grid. */
 
 .logo-img {
@@ -14,7 +17,11 @@
   position: absolute;
   right: 20px;
   top: 0;
+<<<<<<< HEAD
   float: right;
+=======
+  width: 50%;
+>>>>>>> 7ea3841476932c9f97e3ab3fd0ccf15bc2285d0e
 }
 
 /* Search Form */
@@ -27,6 +34,7 @@
   width: 300px;
   z-index: 1;
 }
+<<<<<<< HEAD
 
 
 /* @group Block Menu */
@@ -39,3 +47,5 @@
 
 
 /* @end */
+=======
+>>>>>>> 7ea3841476932c9f97e3ab3fd0ccf15bc2285d0e

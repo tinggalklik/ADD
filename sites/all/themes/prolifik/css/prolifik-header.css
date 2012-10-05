@@ -1,20 +1,38 @@
 /* @override 
+<<<<<<< HEAD
 	http://add.lightyourmusic.com/sites/all/themes/prolifik/css/prolifik-header.css?macqsw
 	http://add.lightyourmusic.com/sites/all/themes/prolifik/css/prolifik-header.css?malf5d
 */
 
 #section-header {
+=======
+http://hi-express.loc/sites/all/themes/prolifik/css/prolifik-header.css?m5ly5f
+*/
+
+#section-header {
+  overflow: hidden;
+>>>>>>> 7ea3841476932c9f97e3ab3fd0ccf15bc2285d0e
   position: relative;
 
 }
 
 #zone-header {
+<<<<<<< HEAD
 }
 
 #zone-header-wrapper {
   position: relative;
   min-height: 35px;
 	background: url(../images/header_back.png) repeat-x;
+=======
+	background-color: white;
+
+}
+
+#zone-header-wrapper {
+  overflow: hidden;
+  position: relative;
+>>>>>>> 7ea3841476932c9f97e3ab3fd0ccf15bc2285d0e
 }
 
 /* Featured (Rotating Banner) */
@@ -34,7 +52,11 @@
 #zone-header .views-slideshow-cycle-main-frame,
 #zone-header .views-slideshow-cycle-main-frame-row,
 #zone-header .views-slideshow-cycle-main-frame-row img {
+<<<<<<< HEAD
 
+=======
+  width: 100% !important;
+>>>>>>> 7ea3841476932c9f97e3ab3fd0ccf15bc2285d0e
 }
 #zone-header .views-slideshow-cycle-main-frame-row,
 #zone-header .views-slideshow-cycle-main-frame-row img {
@@ -42,11 +64,40 @@
 }
 /* Text */
 #zone-header .rotating-banner .banner-text {
+<<<<<<< HEAD
 
 }
 #zone-header .rotating-banner .banner-text .banner-title {
 }
 #zone-header .rotating-banner .banner-text .banner-body {
+=======
+  background: #000;
+  background: rgba(0,0,0,.5);
+  bottom: 0;
+  height: inherit;
+  left: 0;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+  right: 0;
+  width: auto;
+}
+#zone-header .rotating-banner .banner-text .banner-title {
+  color: #fff;
+  font-size: 2.2em;
+  font-weight: normal;
+  letter-spacing: 1px;
+  line-height: 1em;
+  margin: 0;
+  padding: 10px 30px 5px;
+  text-shadow: 2px 2px 0 #000;
+}
+#zone-header .rotating-banner .banner-text .banner-body {
+  color: #ddd;
+  font-size: 1.4em;
+  padding: 0 30px 10px;
+  text-shadow: 2px 2px 0 #000;
+>>>>>>> 7ea3841476932c9f97e3ab3fd0ccf15bc2285d0e
 }
 /* Controls */
 #zone-header .views-slideshow-controls-bottom .widget_pager {

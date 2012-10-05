@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* @override 
 	http://add.lightyourmusic.com/sites/all/themes/prolifik/css/prolifik-postfix.css?malf5d
 	http://add.lightyourmusic.com/sites/all/themes/prolifik/css/prolifik-postfix.css?mbdwod
@@ -22,6 +23,9 @@ background: linear-gradient(to bottom,  #ffeab0 0%,#ffffff 85%); /* W3C */
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffeab0', endColorstr='#ffffff',GradientType=0 ); /* IE6-8 */
 	padding-bottom: 80px;
 }
+=======
+/* Preface */
+>>>>>>> 7ea3841476932c9f97e3ab3fd0ccf15bc2285d0e
 #section-content .zone-wrapper #zone-preface .region-inner {
   padding: 20px;
 }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<<<<<<< HEAD
 <url><loc>http://add.lightyourmusic.com/</loc><changefreq>daily</changefreq><priority>1.0</priority></url>
 <url><loc>http://add.lightyourmusic.com/content/front-page-long-scroll</loc><lastmod>2012-07-26T17:50Z</lastmod><changefreq>yearly</changefreq></url>
 <url><loc>http://add.lightyourmusic.com/egg-cheese</loc><lastmod>2012-09-14T18:26Z</lastmod><changefreq>monthly</changefreq></url>
@@ -83,4 +84,10 @@
 <url><loc>http://add.lightyourmusic.com/about</loc><lastmod>2012-09-18T21:06Z</lastmod><changefreq>monthly</changefreq></url>
 <url><loc>http://add.lightyourmusic.com/friendly-personal-service</loc><lastmod>2012-10-03T16:44Z</lastmod><changefreq>daily</changefreq></url>
 <url><loc>http://add.lightyourmusic.com/breakfast-plate-includes-1-egg-2-slices-bacon-toast-jelly</loc><lastmod>2012-09-14T18:26Z</lastmod><changefreq>monthly</changefreq></url>
+=======
+<url><loc>http://zprobase.loc/</loc><changefreq>daily</changefreq><priority>1.0</priority></url>
+<url><loc>http://zprobase.loc/content/front-page-long-scroll</loc><lastmod>2012-07-26T17:50Z</lastmod><changefreq>weekly</changefreq></url>
+<url><loc>http://zprobase.loc/content/contact-us</loc><lastmod>2012-07-26T16:51Z</lastmod><changefreq>weekly</changefreq></url>
+<url><loc>http://zprobase.loc/thank-you</loc><lastmod>2012-07-26T16:54Z</lastmod><changefreq>weekly</changefreq></url>
+>>>>>>> 7ea3841476932c9f97e3ab3fd0ccf15bc2285d0e
 </urlset>

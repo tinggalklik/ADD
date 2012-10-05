@@ -1,13 +1,25 @@
+<<<<<<< HEAD
 /* @override http://add.lightyourmusic.com/sites/all/themes/prolifik/css/prolifik-base.css?mbdwod */
 
 /* This file will hold the main styles for your website. */
 @import url(http://fonts.googleapis.com/css?family=Lobster);
 
 body {background-color: #FFEAB0;
+=======
+/* @override 
+	http://shs.loc/sites/all/themes/prolifik/css/prolifik-base.css?m67bl9
+	http://zprobase.loc/sites/all/themes/prolifik/css/prolifik-base.css?m7rzjd
+*/
+
+/* This file will hold the main styles for your website. */
+body {
+	background-color: red;
+>>>>>>> 7ea3841476932c9f97e3ab3fd0ccf15bc2285d0e
 }
 
 
 /* Links */
+<<<<<<< HEAD
 
 img.three-home {
 	margin-right: auto;
@@ -109,6 +121,8 @@ div.readmore a {
 	text-shadow: gray 1px 1px 1px;
 }
 
+=======
+>>>>>>> 7ea3841476932c9f97e3ab3fd0ccf15bc2285d0e
 a, a:link {
   text-decoration: none;
 }
@@ -130,6 +144,7 @@ body > #page h4, body > #page h5, body > #page h6 {
 }
 
 body > #page h1#page-title {
+<<<<<<< HEAD
   color: #851A1C;
 	font: 35px Lobster;
 }
@@ -155,6 +170,11 @@ div.view-id-menu_items table caption {
 
 /* @end */
 
+=======
+  color: #191F53;
+}
+
+>>>>>>> 7ea3841476932c9f97e3ab3fd0ccf15bc2285d0e
 /* Admin Menu */
 #admin-menu {
   -moz-box-shadow: none;
@@ -271,6 +291,7 @@ ul.quicktabs-tabs li a {
   display: block;
 }
 
+<<<<<<< HEAD
 img.post-ribbon {
 }
 
@@ -296,3 +317,5 @@ img.post-ribbon {
 
 
 
+=======
+>>>>>>> 7ea3841476932c9f97e3ab3fd0ccf15bc2285d0e
