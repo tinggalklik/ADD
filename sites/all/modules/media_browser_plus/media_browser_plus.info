@@ -10,9 +10,9 @@ dependencies[] = colorbox
 
 files[] = includes/MediaBrowserPlusLibrary.inc
 
-; Information added by drupal.org packaging script on 2012-08-24
+; Information added by drupal.org packaging script on 2013-01-03
 version = "7.x-2.x-dev"
 core = "7.x"
 project = "media_browser_plus"
-datestamp = "1345768451"
+datestamp = "1357219518"
 

@@ -1,14 +1,7 @@
 /* @override 
-<<<<<<< HEAD
-	http://add.lightyourmusic.com/sites/all/themes/prolifik/css/prolifik-menu.css?macqsw
-	http://add.lightyourmusic.com/sites/all/themes/prolifik/css/prolifik-menu.css?malf5d
-	http://add.lightyourmusic.com/sites/all/themes/prolifik/css/prolifik-menu.css?mbdwod
-=======
-	http://hilton.loc/sites/all/themes/navin/css/prolifik-menu.css?m5bgn5
-	http://hilton.loc/sites/all/themes/navin/css/prolifik-menu.css?m5cpcl
-	http://btcv.biz/sites/all/themes/prolifik/css/prolifik-menu.css?m5f2cd
-	http://hi-express.loc/sites/all/themes/navin/css/prolifik-menu.css?m5pnkk
->>>>>>> 7ea3841476932c9f97e3ab3fd0ccf15bc2285d0e
+	http://add.lightyourmusic.com/sites/all/themes/prolifik/css/prolifik-menu.css?mbkys7
+	http://www.add-drugstore.com/sites/all/themes/prolifik/css/prolifik-menu.css?mbl4p9
+	http://add.lightyourmusic.com/sites/all/themes/prolifik/css/prolifik-menu.css?mbmpq9
 */
 
 /* Menu */
@@ -39,11 +32,11 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0e3c7a', end
 #region-menu .region-inner {
   margin: 0 -10px;
 }
-<<<<<<< HEAD
 
 /* @group Block Menu */
 
 #block-system-main-menu {
+	margin-top: 20px;
 }
 
 #block-system-main-menu ul.menu li {
@@ -53,8 +46,11 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0e3c7a', end
   position: relative;
 	font-size: 15px;
 	display: block;
-	margin: 0 5px 0 15px;
+	margin: 0 5px 0 10px;
 	float: left;
+}
+#block-system-main-menu ul.menu li.first.leaf {
+  margin: 0;
 }
 
 #block-system-main-menu ul.menu li.last {
@@ -64,11 +60,11 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0e3c7a', end
 #block-system-main-menu ul.menu li a:link,
 #block-system-main-menu ul.menu li a:visited {
   color: white;
-	font: 1.5em Lobster, cursive;
+	font: normal normal lighter 1.5em Lobster Two, cursive;
 }
 #block-system-main-menu ul.menu li a {
   display: block;
-  padding: 6px 15px;
+  padding: 6px 10px;
   text-decoration: none;
   text-transform: uppercase;
   text-shadow: 0 2px 2px rgba(0,0,0,.5);
@@ -77,16 +73,13 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0e3c7a', end
 #block-system-main-menu ul.menu li:hover a,
 #block-system-main-menu nav ul.menu li.hover a {
   background: #eaeaea;
-  border-radius: 7px;
-	padding: 5px 7px;
-	color: #d08a00;
+  border-radius: 7px;color: #d08a00;
 }
 
 
 
 /* @end */
-=======
->>>>>>> 7ea3841476932c9f97e3ab3fd0ccf15bc2285d0e
+
 #region-menu nav > ul.menu > li {
   background: none;
   float: none;

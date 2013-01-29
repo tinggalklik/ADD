@@ -1,8 +1,5 @@
-<<<<<<< HEAD
 /* @override http://add.lightyourmusic.com/sites/all/themes/prolifik/css/prolifik-preface.css?malf5d */
 
-=======
->>>>>>> 7ea3841476932c9f97e3ab3fd0ccf15bc2285d0e
 /* Preface */
 #section-content .zone-wrapper #zone-preface .region-inner {
   padding: 20px;
@@ -13,7 +10,6 @@
 #zone-preface .block .content strong {
   color: #414141;
 }
-<<<<<<< HEAD
 
 #zone-preface-wrapper {
 }
@@ -24,4 +20,3 @@
 .not-front #zone-preface-wrapper {
   display: none;
 }
->>>>>>> 7ea3841476932c9f97e3ab3fd0ccf15bc2285d0e

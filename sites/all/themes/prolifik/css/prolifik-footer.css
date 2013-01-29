@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-/* @override http://add.lightyourmusic.com/sites/all/themes/prolifik/css/prolifik-footer.css?mbdwod */
+/* @override http://add.lightyourmusic.com/sites/all/themes/prolifik/css/prolifik-footer.css?mbkys7 */
 
 /* Footer */
 
@@ -26,6 +25,7 @@ div.postfix-tag {
 	text-align: center;
 	bottom: 102px;
 	font-size: 4em;
+	left: 61px;
 }
 
 #block-block-3 div.content p {
@@ -35,18 +35,14 @@ div.postfix-tag {
 
 /* @end */
 
-=======
-/* @override http://shs.loc/sites/all/themes/prolifik/css/prolifik-footer.css?m67bl9 */
 
 /* Footer */
->>>>>>> 7ea3841476932c9f97e3ab3fd0ccf15bc2285d0e
 #zone-footer-wrapper {
   z-index: 1;
 	padding-top: 10px;
 	-webkit-box-shadow: #666 0px 0px 10px;
 -moz-box-shadow: #666 0px 0px 10px;
 box-shadow: #666 0px 0px 10px;
-<<<<<<< HEAD
 background: #874100; /* Old browsers */
 /* IE9 SVG, needs conditional override of 'filter' to 'none' */
 background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPHJhZGlhbEdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgY3g9IjUwJSIgY3k9IjUwJSIgcj0iNzUlIj4KICAgIDxzdG9wIG9mZnNldD0iNDAlIiBzdG9wLWNvbG9yPSIjODc0MTAwIiBzdG9wLW9wYWNpdHk9IjEiLz4KICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzRmMjcwMCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgPC9yYWRpYWxHcmFkaWVudD4KICA8cmVjdCB4PSItNTAiIHk9Ii01MCIgd2lkdGg9IjEwMSIgaGVpZ2h0PSIxMDEiIGZpbGw9InVybCgjZ3JhZC11Y2dnLWdlbmVyYXRlZCkiIC8+Cjwvc3ZnPg==);
@@ -58,9 +54,6 @@ background: -ms-radial-gradient(center, ellipse cover,  #874100 40%,#4f2700 100%
 background: radial-gradient(ellipse at center,  #874100 40%,#4f2700 100%); /* W3C */
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#874100', endColorstr='#4f2700',GradientType=1 ); /* IE6-8 fallback on horizontal gradient */
 
-=======
-background-color: #005094;
->>>>>>> 7ea3841476932c9f97e3ab3fd0ccf15bc2285d0e
 }
 #zone-footer-wrapper a,
 #zone-footer-wrapper a:link

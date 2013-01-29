@@ -1,14 +1,12 @@
-/* @override http://shs.loc/sites/all/themes/prolifik/css/prolifik-alpha-default-normal.css?m67bl9 */
+/* @override 
+	http://add.lightyourmusic.com/sites/all/themes/prolifik/css/prolifik-alpha-default-normal.css?mbf9jh
+	http://www.add-drugstore.com/sites/all/themes/prolifik/css/prolifik-alpha-default-normal.css?mbl4p9
+*/
 
 /* This file will hold styles that are loaded using the same media query as the normal grid. */
 
 #logo {
-<<<<<<< HEAD
-	position: absolute;
-	z-index: 999;
-=======
-  width: 250px;
->>>>>>> 7ea3841476932c9f97e3ab3fd0ccf15bc2285d0e
+
 }
 
 /* Search Form */

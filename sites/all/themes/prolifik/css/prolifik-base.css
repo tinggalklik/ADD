@@ -1,30 +1,33 @@
-<<<<<<< HEAD
-/* @override http://add.lightyourmusic.com/sites/all/themes/prolifik/css/prolifik-base.css?mbdwod */
-
 /* This file will hold the main styles for your website. */
 @import url(http://fonts.googleapis.com/css?family=Lobster);
+@import url(http://fonts.googleapis.com/css?family=Lobster+Two);
 
-body {background-color: #FFEAB0;
-=======
-/* @override 
-	http://shs.loc/sites/all/themes/prolifik/css/prolifik-base.css?m67bl9
-	http://zprobase.loc/sites/all/themes/prolifik/css/prolifik-base.css?m7rzjd
-*/
-
-/* This file will hold the main styles for your website. */
-body {
-	background-color: red;
->>>>>>> 7ea3841476932c9f97e3ab3fd0ccf15bc2285d0e
+#block-block-4 div.content form {
+	text-align: center;
+	margin-top: 10px;
+	margin-bottom: 30px;
 }
 
+#block-block-11 p {
+	color: #86241c;
+	font-weight: bold;
+	font-size: 2em;
+	margin-top: 10px;
+	margin-left: 60px;
+}
 
-/* Links */
-<<<<<<< HEAD
+body {background-color: #FFEAB0;}
+
+
 
 img.three-home {
-	margin-right: auto;
-	margin-left: auto;
 	text-align: center;
+	margin: 16px auto 20px;
+}
+
+img.three-home-center {
+	margin-top: 30px;
+	margin-bottom: 57px;
 }
 div.three {
 	text-align: center;
@@ -76,34 +79,40 @@ div.social img {
 
 /* @group Slideshow */
 
+#block-views-slideshow-block {
+	margin-bottom: 20px;
+}
+
+div.views-slideshow-cycle-main-frame-row-item.views-row {
+	width: 940px;
+}
+
+span.views-field.views-field-field-image {
+	float: left;
+}
 
 
 div.slide-title {
-		font: 2.4em Lobster;
-	text-align: center;
+	font: 2.4em Lobster;
 	color: #8D5F00;
 	background: url(../images/stars_bars.png) no-repeat;
-	display: inline-block;
-	width: 450px;
 	padding-top: 20px;
 	margin-top: 30px;
+	text-align: center;
+	width: 450px;
+	margin-left: 450px;
 }
 
 
-div.slideshow p {
+
+div.slide-body  {
 	color: #8C5F00;
 	text-align: justify;
 	margin-top: 20px;
-	width: 430px;
 	padding: 10px;
-}
-
-div.slide-right {
-	float: right;
-}
-
-div.slide-image img {
-	margin-left: 100px;
+	margin-bottom: 0;
+	width: 430px;
+	margin-left: 450px;
 }
 
 
@@ -111,18 +120,27 @@ div.slide-image img {
 /* @end */
 
 div.readmore {
-	float: right;
 	background-color: #ffc343;
 	border-radius: 10px;
 	padding: 5px;
+	clear: both;
+	float: right;
 }
+
+#block-block-5 div.content p {
+	margin-bottom: 80px;
+}
+
+#block-block-6 div.content p {
+	margin-bottom: 61px;
+}
+
 div.readmore a {
 	color: white;
 	text-shadow: gray 1px 1px 1px;
 }
 
-=======
->>>>>>> 7ea3841476932c9f97e3ab3fd0ccf15bc2285d0e
+
 a, a:link {
   text-decoration: none;
 }
@@ -144,14 +162,17 @@ body > #page h4, body > #page h5, body > #page h6 {
 }
 
 body > #page h1#page-title {
-<<<<<<< HEAD
   color: #851A1C;
 	font: 35px Lobster;
 }
 
 #block-block-9 div.content p img {
 	position: relative;
-	right: 25px;
+	right: -5px;
+}
+
+#block-block-9 div.content p {
+	color: #861c1d;
 }
 
 /* @group Soda Fountain */
@@ -170,11 +191,7 @@ div.view-id-menu_items table caption {
 
 /* @end */
 
-=======
-  color: #191F53;
-}
 
->>>>>>> 7ea3841476932c9f97e3ab3fd0ccf15bc2285d0e
 /* Admin Menu */
 #admin-menu {
   -moz-box-shadow: none;
@@ -291,7 +308,6 @@ ul.quicktabs-tabs li a {
   display: block;
 }
 
-<<<<<<< HEAD
 img.post-ribbon {
 }
 
@@ -312,10 +328,29 @@ img.post-ribbon {
 }
 
 
-
 /* @end */
 
+div.refills {
+	float: left;width: 280px;text-align: center;
+	font-size: 16px;
+}
 
+#block-block-11 div.content p {
+	margin-bottom: 0;
+}
 
-=======
->>>>>>> 7ea3841476932c9f97e3ab3fd0ccf15bc2285d0e
+div#modal-content.modal-content.popups-body {
+	background-color: #fce9b0;color: #86241c;
+}
+
+#modal-title {color: #86241c;}
+
+#edit-submit--2 {color: #86241c;
+	width: 100px;
+	font-size: 14px;
+}
+
+#modalContent div.ctools-modal-content.modal-forms-modal-content div.popups-container div.modal-header.popups-title {text-align: center;
+	color: #86241c;
+	background-color: #fce9b0;
+}

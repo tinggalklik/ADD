@@ -1,5 +1,7 @@
-<<<<<<< HEAD
-/* @override http://add.lightyourmusic.com/sites/all/themes/prolifik/css/prolifik-content.css?mbdwod */
+/* @override 
+	http://add.lightyourmusic.com/sites/all/themes/prolifik/css/prolifik-content.css?mbf9jh
+	http://add.lightyourmusic.com/sites/all/themes/prolifik/css/prolifik-content.css?mbkys7
+*/
 
 /* Content */
 #section-content {
@@ -12,7 +14,9 @@ background: -webkit-linear-gradient(top,  #ffeab0 0%,#ffffff 60%); /* Chrome10+,
 background: -o-linear-gradient(top,  #ffeab0 0%,#ffffff 60%); /* Opera 11.10+ */
 background: -ms-linear-gradient(top,  #ffeab0 0%,#ffffff 60%); /* IE10+ */
 background: linear-gradient(to bottom,  #ffeab0 0%,#ffffff 60%); /* W3C */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffeab0', endColorstr='#ffffff',GradientType=0 ); /* IE6-8 */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffeab0', endColorstr='#ffffff',GradientType=0 );
+	margin-top: 15px;
+	padding-top: 10px;
 }
 
 #section-content .section-wrapper {
@@ -24,11 +28,6 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffeab0', end
 #section-content .zone-wrapper .zone {
 }
 #section-content .zone-wrapper > .separator {
-=======
-/* @override 
-	http://btcv.biz/sites/all/themes/prolifik/css/prolifik-content.css?m5f2cd
-	http://hi-express.loc/sites/all/themes/prolifik/css/prolifik-content.css?m5ly5f
-*/
 
 /* Content */
 #section-content {
@@ -69,7 +68,6 @@ box-shadow: #666 0px 0px 10px;
   background: linear-gradient(left,  rgba(255,255,255,1) 0%,rgba(212,212,212,1) 49%,rgba(255,255,255,1) 100%); /* W3C */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff',GradientType=1 ); /* IE6-9 */
   height: 1px;
->>>>>>> 7ea3841476932c9f97e3ab3fd0ccf15bc2285d0e
 }
 #section-content .zone-wrapper .zone .region-inner {
   margin: 0;
@@ -77,28 +75,12 @@ box-shadow: #666 0px 0px 10px;
 }
 
 /* Sidebars */
-<<<<<<< HEAD
 
-/* Gradient ##### 
-background: #ffffff;
-background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPHJhZGlhbEdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgY3g9IjUwJSIgY3k9IjUwJSIgcj0iNzUlIj4KICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiNmZmZmZmYiIHN0b3Atb3BhY2l0eT0iMSIvPgogICAgPHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiNmZmVhYjAiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvcmFkaWFsR3JhZGllbnQ+CiAgPHJlY3QgeD0iLTUwIiB5PSItNTAiIHdpZHRoPSIxMDEiIGhlaWdodD0iMTAxIiBmaWxsPSJ1cmwoI2dyYWQtdWNnZy1nZW5lcmF0ZWQpIiAvPgo8L3N2Zz4=);
-background: -moz-radial-gradient(center, ellipse cover,  #ffffff 0%, #ffeab0 50%);
-background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#ffffff), color-stop(50%,#ffeab0));
-background: -webkit-radial-gradient(center, ellipse cover,  #ffffff 0%,#ffeab0 50%);
-background: -o-radial-gradient(center, ellipse cover,  #ffffff 0%,#ffeab0 50%);
-background: -ms-radial-gradient(center, ellipse cover,  #ffffff 0%,#ffeab0 50%);
-background: radial-gradient(ellipse at center,  #ffffff 0%,#ffeab0 50%);
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffeab0',GradientType=1 );
-
-*/
 #section-content #region-sidebar-first,
 #section-content #region-sidebar-second {
-
+	border-left: thin solid red;
 }
-#section-content #region-sidebar-first .region-inner,
-#section-content #region-sidebar-second .region-inner {
 
-=======
 #section-content #region-sidebar-first,
 #section-content #region-sidebar-second {
   background: -moz-linear-gradient(top,  rgba(255,255,255,0) 0%, rgba(245,245,245,1) 50%, rgba(255,255,255,0) 100%); /* FF3.6+ */
@@ -118,7 +100,6 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
   background: -ms-linear-gradient(left,  rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%); /* IE10+ */
   background: linear-gradient(left,  rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%); /* W3C */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#ffffff',GradientType=1 ); /* IE6-9 */
->>>>>>> 7ea3841476932c9f97e3ab3fd0ccf15bc2285d0e
   height: 100%;
   padding: 20px;
 }
