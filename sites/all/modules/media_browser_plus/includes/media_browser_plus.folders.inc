@@ -1,572 +1,306 @@
 <?php
 /**
  * @file
- * Folder manipulation functions
+ * Folder manipulation functions.
  */
 
 /**
- * @todo Document what this function does.
+ * Moves the root folder of media files.
  *
- * @param $form
- * @param $form_state
+ * Updates the variable media_root_folder too.
+ *
+ * @param string $source
+ *   Source path.
+ * @param string $destination
+ *   Destination path.
  */
-function media_browser_plus_folder_list($form, &$form_state) {
-  $destination = drupal_get_destination();
-  $form['action-links'] = array(
-    '#type' => 'markup',
-    '#markup' => '<ul class="action-links"><li>' .
-    l(t('Add new folder'), 'admin/content/file/add_folder', array('query' => $destination)) .
-    '</li></ul>',
-  );
-  $header = array(
-    'name' => array(
-      'data' => t('Name'),
-      'width' => '55%',
-    ),
-    'weight' => array(
-      'data' => t('Weight'),
-      'width' => '15%',
-    ),
-    'description' => array(
-      'data' => t('Description'),
-      'width' => '30%',
-    ),
-    'operations' => array(
-      'data' => t('Operations'),
-      'colspan' => 2,
-    ),
-  );
-  drupal_add_tabledrag('folder-overview', 'match', 'parent', 'folder-pid', 'folder-pid', 'folder-folder_id', TRUE);
-  drupal_add_tabledrag('folder-overview', 'order', 'sibling', 'folder-weight');
-
-  // Get table rows.
-  $rows = media_browser_plus_folder_admin_list();
-  if (empty($rows)) {
-    $rows[] = array(array('data' => t('No folders created yet.'), 'colspan' => '5'));
+function media_browser_plus_move_root_folder($source, $destination) {
+  if (!empty($source)) {
+    $source .= '/';
   }
-  $output = theme(
-    'table',
-    array(
-      'header' => $header,
-      'rows' => $rows,
-      'attributes' => array('id' => 'folder-overview'),
-    )
-  );
-  $form['admin'] = array(
-    '#type' => 'markup',
-    '#markup' => $output,
-  );
-  $form['actions'] = array('#type' => 'actions');
-  $form['actions']['submit'] = array('#type' => 'submit', '#value' => t('Save Changes'));
-  $form['actions']['cancel'] = array(
-    '#type' => 'submit',
-    '#value' => t('Cancel'),
-    '#submit' => array('media_browser_plus_folder_admin_list_cancel'),
-  );
-  return $form;
-}
+  if (!empty($destination)) {
+    $destination .= '/';
+  }
+  // Load root folder term.
+  $root_folder_term = media_browser_plus_get_media_root_folder();
 
-/**
- * @todo Document what this function is does.
- *
- * @param $form
- * @param $form_state
- */
-function media_browser_plus_folder_list_submit($form, &$form_state) {
-  foreach ($form_state['input'] as $key => $value) {
-    if (strstr($key, 'folder_id')) {
-      $folder = media_browser_plus_folder_load((int) $value['folder_id']);
-      $source = media_browser_plus_construct_dir_path($folder);
-      $folder->parent = (int) $value['pid'];
-      $folder->weight = (int) $value['weight'];
-      taxonomy_term_save($folder);
-      $destination = media_browser_plus_construct_dir_path($folder);
-      if ($source != $destination) {
-        // Update physical folder structure.
-        media_browser_plus_move_physical_folder($source, $destination);
-      }
+  // Prepare destination.
+  foreach (media_get_local_stream_wrappers() as $scheme => $scheme_info) {
+    $directory = file_stream_wrapper_uri_normalize($scheme . '://' . $destination);
+    file_prepare_directory($directory, FILE_CREATE_DIRECTORY | FILE_MODIFY_PERMISSIONS);
+  }
+  variable_set('media_root_folder', trim($destination, '/'));
+
+  // Move media files in root folder itself. We do this because if the root
+  // folder was located in the default file directory of Drupal we can't move
+  // all files / folders.
+  $file_query = new EntityFieldQuery();
+  $files = $file_query
+    ->entityCondition('entity_type', 'file')
+    ->fieldCondition('field_folder', 'tid', $root_folder_term->tid)
+    ->execute();
+  if (!empty($files['file'])) {
+    $file_entities = file_load_multiple(array_keys($files['file']));
+    foreach ($file_entities as $file_entity) {
+      file_move($file_entity, file_stream_wrapper_uri_normalize(file_uri_scheme($file_entity->uri) . '://' . $destination));
     }
   }
-  drupal_set_message(t('Changes saved successfully'));
-  $form_state['redirect'] = 'admin/content/file/thumbnails';
-}
-
-/**
- * @todo Document what this function is does.
- *
- * @param $form
- * @param $form_state
- */
-function media_browser_plus_folder_admin_list_cancel($form, &$form_state) {
-  $form_state['redirect'] = 'admin/content/file/thumbnails';
-}
-/**
- * @todo Document what this function does.
- *
- */
-function media_browser_plus_folder_admin_list() {
-  $vocabulary = taxonomy_vocabulary_machine_name_load('media_folders');
-  $categories = array();
-  $result = taxonomy_get_tree($vocabulary->vid);
-  $destination = drupal_get_destination();
-  $rows = array();
-  foreach ($result as $key => $item) {
-    $element['plid']['#attributes']['class'] = array('menu-plid');
-    $element['mlid']['#attributes']['class'] = array('menu-mlid');
-    $element['weight']['#attributes']['class'] = array('menu-weight');
-    // Create row.
-    $row = array();
-    $row[] = theme('indentation', array('size' => $item->depth)) . $item->name;
-    $row[] = media_browser_plus_folder_theme_folder_weight_column($item->weight, $item->tid, $item->parents[0]);
-    $row[] = $item->description;
-    $row[] = l(t('edit'), 'admin/content/file/folder/' . $item->tid . '/edit', array('query' => $destination));
-    $row[] = l(t('delete'), 'admin/content/file/folder/' . $item->tid . '/delete', array('query' => $destination));
-    // Change formate of row.
-    $row = array('data' => $row);
-    $row['class'][] = 'draggable';
-    $rows[] = $row;
-  }
-  return $rows;
-}
-
-/**
- * @todo Document what this function is does.
- *
- * @param $form
- * @param $form_state
- */
-function media_browser_plus_folder_add($form, &$form_state) {
-  $form['new_folder'] = array(
-    '#type' => 'fieldset',
-    '#title' => t('New Folder'),
-    'name' => array(
-      '#type' => 'textfield',
-      '#title' => t('Name'),
-      '#description' => t('Please enter a folder name'),
-      '#maxlength' => 125,
-      '#required' => TRUE,
-    ),
-    'description' => array(
-      '#type' => 'textfield',
-      '#title' => t('Description'),
-      '#description' => t('You may enter a brief description'),
-      '#maxlength' => 255,
-    ),
-    'pid' => array(
-      '#type' => 'select',
-      '#title' => t('Parent Category'),
-      '#options' => media_browser_plus_folder_get_folders(),
-      '#description' => t('Sets one parent folder for the new folder'),
-    ),
+  // Collect the subfolder operations.
+  $batch = array(
+    'title' => t('Move root folder'),
+    'operations' => array(),
+    'finished' => 'media_browser_plus_move_root_folder_complete',
+    'file' => drupal_get_path('module', 'media_browser_plus') . '/includes/media_browser_plus.folders.inc',
   );
-  $form['actions'] = array(
-    '#type' => 'actions',
-    'submit' => array(
-      '#type' => 'submit',
-      '#value' => t('Save'),
-      '#submit' => array('media_browser_plus_folder_add_submit'),
-    ),
-    'continue' => array(
-      '#type' => 'submit',
-      '#value' => t('Save & Continue'),
-      '#submit' => array('media_browser_plus_folder_add_submit_continue'),
-    ),
-    'cancel' => array(
-      '#type' => 'submit',
-      '#value' => t('Cancel'),
-      '#limit_validation_errors' => array(),
-      '#submit' => array('media_browser_plus_folder_add_cancel'),
-    ),
-  );
-  return $form;
-}
 
-/**
- * @todo Document what this function is does.
- *
- * @param $form
- * @param $form_state
- */
-function media_browser_plus_folder_add_submit($form, &$form_state) {
-  // Save folder.
-  media_browser_plus_folder_save_folder($form_state);
-  // Go back.
-  $destination = drupal_get_destination();
-  $form_state['redirect'] = $destination['destination'];
-}
+  // Set the media root folder variable to the new destination.
+  $batch['operations'] = array();
 
-/**
- * @todo Document what this function is does.
- *
- * @param $form
- * @param $form_state
- */
-function media_browser_plus_folder_add_submit_continue($form, &$form_state) {
-  media_browser_plus_folder_save_folder($form_state);
-  $destination = array();
-  if (isset($_GET['destination'])) {
-    $destination = drupal_get_destination();
-    unset($_GET['destination']);
+  // Move subfolders.
+  $root_subfolders = taxonomy_get_children($root_folder_term->tid);
+  foreach ($root_subfolders as $subfolder) {
+    $subfolder_source = media_browser_plus_construct_dir_path($subfolder);
+    $subfolder_destination = $destination . str_replace($source, '', $subfolder_source);
+    // Already takes care of multiple stream wrappers.
+    $batch['operations'] = array_merge($batch['operations'], media_browser_plus_move_subfolder($subfolder, $subfolder_source, $subfolder_destination));
   }
-  $form_state['redirect'] = array('admin/content/file/add_folder', array('query' => $destination));
+  batch_set($batch);
 }
 
 /**
- * @todo Document what this function is does.
- *
- * @param $form
- * @param $form_state
- * @param $folder
+ * Finish-callback for the move root folder batch.
  */
-function media_browser_plus_folder_edit($form, &$form_state, $folder) {
-  $parents = taxonomy_get_parents($folder->tid);
-  $parents_keys = array_keys($parents);
-  $form['folder'] = array(
-    '#type' => 'fieldset',
-    '#title' => t('New Folder'),
-    'folder_id' => array(
-      '#type' => 'hidden',
-      '#value' => $folder->tid,
-    ),
-    'name' => array(
-      '#type' => 'textfield',
-      '#title' => t('Name'),
-      '#description' => t('Please enter a folder name'),
-      '#maxlength' => 125,
-      '#default_value' => $folder->name,
-      '#required' => TRUE,
-    ),
-    'description' => array(
-      '#type' => 'textfield',
-      '#title' => t('Description'),
-      '#description' => t('You may enter a brief description'),
-      '#default_value' => $folder->description,
-      '#maxlength' => 255,
-    ),
-    'pid' => array(
-      '#type' => 'select',
-      '#title' => t('Parent Category'),
-      '#options' => media_browser_plus_folder_get_folders(),
-      '#default_value' => count($parents) ? array_pop($parents_keys) : 0,
-      '#description' => t('Sets one parent folder for the new folder'),
-    ),
-  );
-  $form['actions'] = array(
-    '#type' => 'actions',
-    'submit' => array(
-      '#type' => 'submit',
-      '#value' => t('Save'),
-      '#submit' => array('media_browser_plus_folder_edit_submit'),
-    ),
-    'delete' => array(
-      '#type' => 'submit',
-      '#value' => t('Delete'),
-      '#submit' => array('media_browser_plus_folder_edit_delete'),
-    ),
-    'cancel' => array(
-      '#type' => 'submit',
-      '#value' => t('Cancel'),
-      '#limit_validation_errors' => array(),
-      '#submit' => array('media_browser_plus_folder_add_cancel'),
-    ),
-  );
-  return $form;
-}
-
-/**
- * Validator for the settings form of the folder management.
- */
-function media_browser_plus_folder_edit_validate($form, &$form_state) {
-  if ($form_state['values']['pid'] == $form_state['values']['folder_id']) {
-    form_set_error('pid', t('You cannot select a folder as parent of itself.'));
-  }
-}
-
-/**
- * Submit handler for the settings form of the folder management.
- */
-function media_browser_plus_folder_edit_submit($form, &$form_state) {
-  // Save folder.
-  media_browser_plus_folder_save_folder($form_state);
-  // Go back.
-  $destination = drupal_get_destination();
-  $form_state['redirect'] = $destination['destination'];
-}
-
-/**
- * @todo Document what this function is does.
- *
- * @param $form
- * @param $form_state
- */
-function media_browser_plus_folder_edit_delete($form, &$form_state) {
-  if (isset($form_state['values']['folder_id'])) {
-    $destination = array();
-    if (isset($_GET['destination'])) {
-      $destination = drupal_get_destination();
-      unset($_GET['destination']);
-    }
-    $form_state['redirect'] = array('admin/content/file/folder/' . (int) $form_state['values']['folder_id'] . '/delete', array('query' => $destination));
-  }
-}
-
-/**
- * @todo Document what this function is does.
- *
- * @param $form
- * @param $form_state
- */
-function media_browser_plus_folder_delete($form, &$form_state, $folder) {
-  // Check if folder not empty and has no subfolders.
-  $voc = taxonomy_vocabulary_machine_name_load('media_folders');
-  $children = taxonomy_get_tree($voc->vid, $folder->tid);
-  if (!_media_browser_plus_folder_empty($folder->tid) && count($children) == 0) {
-    $form['intro'] = array(
-      '#type' => 'item',
-      '#markup' => t('Do you really want to delete the following folder:'),
-    );
-    $form['item'] = array(
-      '#type' => 'item',
-      '#markup' => $folder->name,
-      '#prefix' => '<ul><li>',
-      '#suffix' => '</ul></li>',
-    );
-    $form['note'] = array(
-      '#type' => 'item',
-      '#markup' => t('This action cannot be undone.'),
-    );
-    $form['folder_id'] = array(
-      '#type' => 'hidden',
-      '#value' => $folder->tid,
-    );
-    $form['actions'] = array(
-      '#type' => 'actions',
-      'delete' => array(
-        '#type' => 'submit',
-        '#value' => t('Delete'),
-        '#submit' => array('media_browser_plus_folder_delete_submit'),
-      ),
-      'cancel' => array(
-        '#type' => 'submit',
-        '#value' => t('Cancel'),
-        '#limit_validation_errors' => array(),
-        '#submit' => array('media_browser_plus_folder_add_cancel'),
-      ),
-    );
-    return $form;
+function media_browser_plus_move_root_folder_complete($success, $results, $operations) {
+  if ($success) {
+    drupal_set_message(t('Successfully changed media root folder and all file URIs'));
   }
   else {
-    if (count($children) != 0) {
-      drupal_set_message(t('Folder %folder_name has subfolders and cannot be deleted', array('%folder_name' => $folder->name)), 'error');
+    drupal_set_message(t('Error while changing media root folder'), 'error');
+  }
+}
+
+/**
+ * Helper function to move a subfolder - and update the related files.
+ *
+ * @param object $folder
+ *   The _updated_ folder term. Is used to generate the destination.
+ * @param string $source
+ *   The current path without scheme.
+ * @param string $destination
+ *   The new path. Including the directory name but without scheme!
+ *
+ * @return array
+ *   A list of batch operations to execute to finish the job.
+ */
+function media_browser_plus_move_subfolder($folder, $source, $destination) {
+  $operations = array();
+  foreach (media_get_local_stream_wrappers() as $scheme => $scheme_info) {
+    $source_path = file_stream_wrapper_uri_normalize($scheme . '://' . $source);
+    $destination_path = file_stream_wrapper_uri_normalize($scheme . '://' . $destination);
+    if ($source != $destination) {
+      // This will move all subfolders too. Thus we have to handle all child
+      // folder terms as well.
+      file_prepare_directory($destination_path, FILE_CREATE_DIRECTORY | FILE_MODIFY_PERMISSIONS);
+      media_browser_plus_move_physical_folder($source_path, $destination_path);
     }
-    if (_media_browser_plus_folder_empty($folder->tid)) {
-      drupal_set_message(t('Folder %folder_name is not empty and cannot be deleted', array('%folder_name' => $folder->name)), 'error');
+    // @todo This could move into the condition, but this way it's more stable.
+    // Update files in folder and subfolders get folders.
+    $folders = array($folder->tid);
+
+    // Fetch all sub-folders.
+    $sub_folders = taxonomy_get_tree($folder->vid, $folder->tid);
+    foreach ($sub_folders as $sub_folder) {
+      $folders[] = $sub_folder->tid;
     }
-    $destination = drupal_get_destination();
-    drupal_goto($destination['destination']);
+    $operations[] = array('media_browser_plus_folder_update_file_locations_batch', array($folders));
   }
+
+  return $operations;
 }
 
 /**
- * @todo Document what this function is does.
+ * Batch function to move files to the location according the assigned folder.
  *
- * @param $form
- * @param $form_state
- */
-function media_browser_plus_folder_delete_submit($form, &$form_state) {
-  // Load folder, delete and return.
-  $folder = media_browser_plus_folder_load((int) $form_state['values']['folder_id']);
-  $physical_folder = media_browser_plus_construct_dir_path($folder);
-  if (taxonomy_term_delete($folder->tid) && drupal_rmdir($physical_folder)) {
-    drupal_set_message(t('Folder %folder_name deleted successfully', array('%folder_name' => $folder->name)));
-  }
-  else {
-    drupal_set_message(t('Error deleting folder %folder_name', array('%folder_name' => $folder->name)), 'error');
-  }
-  $destination = drupal_get_destination();
-  $form_state['redirect'] = $destination['destination'];
-}
-
-/**
- * @todo Document what this function is does.
- */
-function media_browser_plus_folder_save_folder($form_state) {
-  $vocabulary = taxonomy_vocabulary_machine_name_load('media_folders');
-  $term = new stdClass();
-
-  if (isset($form_state['values']['folder_id'])) {
-    $term->tid = (int) $form_state['values']['folder_id'];
-    $source = media_browser_plus_construct_dir_path($term);
-  }
-
-  $term->name = check_plain($form_state['values']['name']);
-
-  $term->description = check_plain($form_state['values']['description']);
-  $term->parent = (int) $form_state['values']['pid'];
-  $term->vid = $vocabulary->vid;
-  // Save (folder) term.
-  switch (taxonomy_term_save($term)) {
-    case SAVED_NEW:
-      // Create physical folder.
-      $dir = media_browser_plus_construct_dir_path($term);
-      if (file_prepare_directory($dir, FILE_CREATE_DIRECTORY)) {
-        drupal_set_message(t('Folder %term_name created successfully', array('%term_name' => $term->name)));
-      }
-      else {
-        drupal_set_message(t('Folder %term_name created successfully as term but failed to create as physical folder.Please do it manually', array('%term_name' => $term->name)), 'warning');
-      }
-      break;
-
-    case SAVED_UPDATED:
-      // Update physical folder.
-      $destination = media_browser_plus_construct_dir_path($term);
-      if ($source != $destination) {
-        media_browser_plus_move_physical_folder($source, $destination);
-        // Update files in folder and subfolders get folders.
-        $folders = array($term->tid);
-        $sub_folders = taxonomy_get_children($term->tid);
-        // Add subfolders if found.
-        foreach ($sub_folders as $sf) {
-          $folders[] = $sf->tid;
-        }
-        $path = drupal_get_path('module', 'media_browser_plus');
-        // Set batch.
-        $batch = array(
-          'title' => t('Updating Media'),
-          'operations' => array(
-            array('media_browser_plus_folder_update_file_locations_batch', array($folders)),
-          ),
-          'finished' => 'media_browser_plus_folder_update_file_locations_batch_complete',
-          'file' => $path . '/includes/media_browser_plus.folders.inc',
-        );
-        batch_set($batch);
-      }
-      drupal_set_message(t('Folder %term_name updated successfully', array('%term_name' => $term->name)));
-      break;
-
-    case FALSE:
-      drupal_set_message(t('Error saving folder %term_name', array('%term_name' => $term->name)), 'error');
-      break;
-  }
-}
-
-/**
- * @todo Document what this function is does.
- */
-function media_browser_plus_folder_get_folders() {
-  $vocabulary = taxonomy_vocabulary_machine_name_load('media_folders');
-  $folders = array(0 => '> ' . t('No Parent') . ' <');
-  foreach (taxonomy_get_tree($vocabulary->vid) as $key => $value) {
-    $folders[$value->tid] = str_pad('', $value->depth, '-') . $value->name;
-  }
-  return $folders;
-}
-
-/**
- * Simple form cancel redirect.
+ * Adjust the file uri to match the path given by the assigned folder. If the
+ * uri is adjusted hook_file_move() is invoked.
+ * If the file isn't located in the related directory on the disk it's moved.
+ * The legacy path of the file is logged in $context['handled_directories'].
  *
- * @param $form
- * @param $form_state
- */
-function media_browser_plus_folder_add_cancel($form, &$form_state) {
-  $destination = drupal_get_destination();
-  $form_state['redirect'] = $destination['destination'];
-}
-
-/**
- * @todo Document what this function does.
- *
- * @param $weight
- * @param $folder_id
- * @param $pid
- */
-function media_browser_plus_folder_theme_folder_weight_column($weight, $folder_id, $pid) {
-  // Create the necessary div & select form.
-  $output = '<div class="form-item form-type-select form-item-folder_id:' . $folder_id . '-weight">
-    <select name="folder_id:' . $folder_id . '[weight]" class="folder-weight form-select" id="edit-folder_id' . $folder_id . '-weight" >';
-  $options = range(-50, 50);
-  foreach ($options as $option) {
-    $output .= '<option ' . ($option == $weight ? 'selected="selected"' : '') . ' value="' . $option . '">' . $option . '</option>';
-  }
-  $output .= '</select></div>';
-  $output .= '<input type="hidden" id="edit-folder_id' . $folder_id . '-pid" class="folder-pid" value="' . $pid . '" name="folder_id:' . $folder_id . '[pid]" />';
-  $output .= '<input type="hidden" id="edit-folder_id' . $folder_id . '-folder_id" class="folder-folder_id" value="' . $folder_id . '" name="folder_id:' . $folder_id . '[folder_id]" />';
-
-  return $output;
-}
-
-/**
- * Batch function that updates all media URIs inside the given folders.
- *
- * @param $folders
- * @param $context
+ * @param array $folders
+ *   A list of folder ids (term ids).
+ * @param array $context
+ *   Batch context array.
  */
 function media_browser_plus_folder_update_file_locations_batch($folders, &$context) {
-  $per_page = 25;
-  $conditions = array();
-  $conditions[] = array('field' => array('field_folder', 'tid', $folders, 'IN'));
-  $options = array(
-    'apply_filter' => FALSE,
-    'count_only' => TRUE,
-    'conditions' => $conditions,
-  );
-  $media_count = media_browser_plus_load_multiple($options);
+  $step_size = 25;
+
+  $file_query = new EntityFieldQuery();
+  $file_query
+    ->entityCondition('entity_type', 'file');
+  if (!empty($folders)) {
+    $file_query->fieldCondition('field_folder', 'tid', $folders, 'IN');
+  }
 
   if (empty($context['sandbox'])) {
     $context['sandbox']['progress'] = 0;
-    $context['sandbox']['max'] = $media_count;
+    $files = $file_query->execute();
+    $context['sandbox']['max'] = (!empty($files['file'])) ?  count($files['file']) : 0;
+    $context['local_stream_wrappers'] = media_get_local_stream_wrappers();
   }
-  // Look how far we got and where we have to resume.
-  $media_start = $context['sandbox']['progress'];
-  $page = ($media_start == 0) ? 0 : round(($media_start / $per_page), 0);
-
   if (!isset($context['results'])) {
     $context['results'] = array('success' => array(), 'errors' => array());
   }
-  $order = array(array('property' => array('fid', 'ASC')));
-  $attributes = array(
-    'apply_filter' => FALSE,
-    'paging' => TRUE,
-    'per_page' => $per_page,
-    'page' => $page,
-    'order' => $order,
-    'conditions' => $conditions,
-  );
-  $media_query = media_browser_plus_load_multiple($attributes);
+
+  $file_query->range($context['sandbox']['progress'], $step_size);
+  $files = $file_query->execute();
+  $file_entities = array();
+  if (!empty($files['file'])) {
+    $file_entities = file_load_multiple(array_keys($files['file']));
+  }
   // Checking media.
-  foreach ($media_query->results as $media) {
-    if (isset($media->field_folder[LANGUAGE_NONE][0]['tid'])) {
-      $path = media_browser_plus_construct_dir_path(taxonomy_term_load($media->field_folder[LANGUAGE_NONE][0]['tid']));
-      $media->uri = $path . '/' . array_pop(explode('/', $media->uri));
-      file_save($media);
+  foreach ($file_entities as $file) {
+    // Only handle locale files with a folder id.
+    if (isset($context['local_stream_wrappers'][file_uri_scheme($file->uri)]) && isset($file->field_folder[LANGUAGE_NONE][0]['tid'])) {
+      // Update file path.
+      $source = clone $file;
+      $path = media_browser_plus_construct_dir_path(taxonomy_term_load($file->field_folder[LANGUAGE_NONE][0]['tid']));
+      $file->uri = file_stream_wrapper_uri_normalize(file_uri_scheme($file->uri) . '://' . $path . '/' . drupal_basename($file->uri));
+      // Check if the uri has changed.
+      if ($file->uri !== $source->uri) {
+        // Check if the source file still exists, if so move the file.
+        clearstatcache();
+        if (file_exists(drupal_realpath($source->uri))) {
+          $context['handled_directories'][drupal_dirname($source->uri)] = drupal_dirname($source->uri);
+          $destination = drupal_dirname($file->uri);
+          file_prepare_directory($destination, FILE_CREATE_DIRECTORY | FILE_MODIFY_PERMISSIONS);
+          file_unmanaged_move($source->uri, $destination, FILE_EXISTS_RENAME);
+        }
+        // Save all the changes and inform other modules.
+        file_save($file);
+        // Inform modules that the file has been moved.
+        module_invoke_all('file_move', $file, $source);
+      }
     }
   }
-  // Increment start.
-  $media_start = $media_start + $per_page;
-  // Make sure start is not above max (for progress).
-  $media_start = $media_start > $media_count ? $media_count : $media_start;
-  // Set sandbox value.
-  $context['sandbox']['max'] = $media_count;
-  $context['sandbox']['progress'] = $media_start;
+  // Increment progress but make sure start is not above max (for progress).
+  $context['sandbox']['progress'] = min($context['sandbox']['max'], ($context['sandbox']['progress'] + $step_size));
   // Set other context values.
-  $context['message'] = t('Updating') . '...(' . $context['sandbox']['progress'] . '/' . $context['sandbox']['max'] . ') ';
+  $context['message'] = t('Relocating files') . '...(' . $context['sandbox']['progress'] . '/' . $context['sandbox']['max'] . ') ';
+  $context['finished'] = 1;
   if ($context['sandbox']['progress'] < $context['sandbox']['max']) {
     $context['finished'] = $context['sandbox']['progress'] / $context['sandbox']['max'];
   }
 }
 
 /**
- * Called on completion of the batch.
+ * Cut-paste a directory with its children into a new filesystem location.
  *
- * @param type $success
- * @param type $results
- * @param type $operations
+ * @param string $source
+ *   The current path.
+ * @param string $destination
+ *   The new path.
+ *
+ * @return bool
+ *   TRUE on success.
  */
-function media_browser_plus_folder_update_file_locations_batch_complete($success, $results, $operations) {
-  if ($success) {
-    drupal_set_message(t('Successfully updated all URIs'));
+function media_browser_plus_move_physical_folder($source, $destination) {
+  $destination = drupal_realpath($destination);
+  $source = drupal_realpath($source);
+  $jail = drupal_realpath(variable_get('file_default_scheme', 'public') . '://');
+  $files = @scandir($source);
+  if ($files && count($files) > 2) {
+    $transfer = new FileTransferLocal($jail);
+    clearstatcache();
+    // We need to copy the children first and later handle the source folder
+    // since this is how FileTransferLocal works.
+    foreach ($files as $file) {
+      if (!in_array($file, array('.', '..'))) {
+        $source_path = $source . DIRECTORY_SEPARATOR . $file;
+        $copy_destination =  $destination . DIRECTORY_SEPARATOR . $file;
+        if (is_file($source_path)) {
+          $transfer->copyFile($source_path, $copy_destination);
+          $transfer->removeFile($source_path);
+        }
+        else {
+          $transfer->copyDirectory($source_path, $copy_destination);
+          $transfer->removeDirectory($source_path);
+        }
+      }
+    }
+    // All stuff is moved to destination, delete the source now.
+    $transfer->removeDirectory($source);
   }
   else {
-    drupal_set_message(t('Error during media batch'), 'error');
+    // The folder is empty so just delete and create the new one.
+    if (file_exists($source)) {
+      drupal_rmdir($source);
+    }
+    file_prepare_directory($destination, FILE_CREATE_DIRECTORY | FILE_MODIFY_PERMISSIONS);
+  }
+  return TRUE;
+}
+
+
+/**
+ * Rebuilds the folder structure on the disk.
+ *
+ * All local files that have a folder id will be processed. If a file isn't
+ * located where it should be it's moved to the correct place.
+ * This will trigger hook_file_move() so that other modules can act.
+ * After all files are processed the legacy directories are deleted if they're
+ * empty.
+ *
+ * @see hook_file_move()
+ */
+function media_browser_plus_rebuild_folder_structure() {
+  // Prepare batch.
+  $batch = array(
+    'title' => t('Rebuild folder structure'),
+    'operations' => array(
+      array('media_browser_plus_rebuild_folder_structure_process', array()),
+    ),
+    'finished' => 'media_browser_plus_rebuild_folder_structure_complete',
+    'file' => drupal_get_path('module', 'media_browser_plus') . '/includes/media_browser_plus.folders.inc',
+  );
+  batch_set($batch);
+}
+
+/**
+ * Batch process of folder rebuild moves files and delete leftover directories.
+ *
+ * @see media_browser_plus_rebuild_folder_structure()
+ */
+function media_browser_plus_rebuild_folder_structure_process(&$context) {
+  // Reuse existing code to move the files.
+  media_browser_plus_folder_update_file_locations_batch(array(), $context);
+  // Cleanup empty directories.
+  if ($context['finished'] >= 1 && !empty($context['handled_directories'])) {
+    clearstatcache();
+    foreach ($context['handled_directories'] as $uri) {
+      $directory = drupal_realpath($uri);
+      if (is_dir($directory)) {
+        foreach (new RecursiveIteratorIterator(new SkipDotsRecursiveDirectoryIterator($directory), RecursiveIteratorIterator::CHILD_FIRST) as $filename => $file) {
+          if ($file->isDir()) {
+            @drupal_rmdir($filename);
+          }
+          elseif ($file->isFile()) {
+            // If there's a file left, don't delete the folder.
+            break;
+          }
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Finish callback for the folder structure rebuild batch.
+ */
+function media_browser_plus_rebuild_folder_structure_complete($success, $results, $operations) {
+  if ($success) {
+    drupal_set_message(t('Successfully rebuild the folder structure'));
+  }
+  else {
+    drupal_set_message(t('Error while rebuilding folder structure'), 'error');
   }
 }

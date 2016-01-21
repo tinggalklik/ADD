@@ -1,3 +1,7 @@
+/* @override 
+	http://add-drugstore.com/sites/all/themes/prolifik/css/prolifik-base.css?ntoufi */
+
+
 /* This file will hold the main styles for your website. */
 @import url(http://fonts.googleapis.com/css?family=Lobster);
 @import url(http://fonts.googleapis.com/css?family=Lobster+Two);
@@ -61,6 +65,15 @@ div.address {
 div.social {
 	clear: both;
 }
+#block-block-11 {
+	margin-top: 10px;
+}
+#block-block-11 div.phone {
+	float: right;
+	font-size: 2em;
+	color: #861c1c;
+}
+
 div.social img {
 	margin-right: 10px;
 	display: block;
@@ -309,6 +322,7 @@ ul.quicktabs-tabs li a {
 }
 
 img.post-ribbon {
+	
 }
 
 /* @group Non Responsive Mods */
@@ -333,6 +347,7 @@ img.post-ribbon {
 div.refills {
 	float: left;width: 280px;text-align: center;
 	font-size: 16px;
+	font-weight: bold;
 }
 
 #block-block-11 div.content p {

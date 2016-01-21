@@ -1,0 +1,8 @@
+filename = "AthensPharmacyADDDrugStore-2015-08-26T07-54-35"
+description = ""
+datestamp = "1440590076"
+generator = "Backup and Migrate (http://drupal.org/project/backup_migrate)"
+generatorversion = "7.x-2.x"
+sites[0][version] = "7.38"
+sites[0][name] = "Athens Pharmacy | ADD Drug Store"
+sites[0][url] = "http://default/"

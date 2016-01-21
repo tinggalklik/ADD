@@ -8,82 +8,21 @@
  * Implements hook_install().
  */
 function media_browser_plus_install() {
-  variable_set('media_root_folder', 'media');
-  // Make sure the standard 'field_tags' field exists.
-  _media_browser_plus_ensure_field_tags();
-  _media_browser_plus_ensure_field_folder();
+  // This should be load after views is ready.
+  db_query("UPDATE {system} SET weight = 11 WHERE name = 'media_browser_plus'");
 }
 
 /**
- * Make sure the field_tags field exists and is of the right type.
+ * Implements hook_enable().
+ *
+ * Ensure the necessary structures exist.
  */
-function _media_browser_plus_ensure_field_tags() {
-  $t = get_t();
-  // Make sure the 'tags' vocabulary exists.
-  $vocabulary = taxonomy_vocabulary_machine_name_load('tags');
-  if (!$vocabulary) {
-    $description = st('Use tags to group articles on similar topics into categories.');
-    $help = st('Enter a comma-separated list of words to describe your content.');
-    $vocabulary = (object) array(
-      'name' => 'Tags',
-      'description' => $description,
-      'machine_name' => 'tags',
-      'help' => $help,
-    );
-    taxonomy_vocabulary_save($vocabulary);
-  }
-
-  $field = array(
-    'field_name' => 'field_tags',
-    'type' => 'taxonomy_term_reference',
-    // Set cardinality to unlimited for tagging.
-    'cardinality' => FIELD_CARDINALITY_UNLIMITED,
-    'entity_type' => 'file',
-    'label' => 'Tags',
-    'widget' => array('type' => 'taxonomy_autocomplete'),
-    'settings' => array(
-      'allowed_values' => array(
-        array(
-          'vocabulary' => $vocabulary->machine_name,
-          'parent' => 0,
-        ),
-      ),
-    ),
-  );
-  _media_browser_plus_ensure_field($field);
-
-  // Latest file entity version.
-  if (function_exists('file_type_get_all_types')) {
-    $file_types = array_keys(file_type_get_all_types());
-  }
-  else {
-    $file_types = array_keys(file_info_file_types());
-  }
-  // Ensure instance for each media bundle.
-  foreach ($file_types as $bundle) {
-    $field['bundle'] = $bundle;
-    _media_browser_plus_ensure_instance($field);
-  }
-}
-
-/**
- * Make sure the field_tags field exists and is of the right type.
- */
-function _media_browser_plus_ensure_field_folder() {
-  // Make sure the 'tags' vocabulary exists.
+function media_browser_plus_enable() {
+  // Folder vocabulary and root term.
+  $root_folder = media_browser_plus_get_media_root_folder(TRUE);
   $vocabulary = taxonomy_vocabulary_machine_name_load('media_folders');
-  if (!$vocabulary) {
-    $description = st('Use media folders to organize your media');
-    $help = st('Enter a concise name for the media folder');
-    $vocabulary = (object) array(
-      'name' => 'Media Folders',
-      'description' => $description,
-      'machine_name' => 'media_folders',
-      'hierarchy' => 1,
-      'help' => $help,
-    );
-    taxonomy_vocabulary_save($vocabulary);
-  }
+
+  // Create the folder field.
   $field = array(
     'field_name' => 'field_folder',
     'label' => st('Media Folder'),
@@ -102,77 +41,35 @@ function _media_browser_plus_ensure_field_folder() {
       ),
     ),
   );
-  _media_browser_plus_ensure_field($field);
-
-  // Latest file entity version.
-  if (function_exists('file_type_get_all_types')) {
-    $file_types = array_keys(file_type_get_all_types());
-  }
-  else {
-    $file_types = array_keys(file_info_file_types());
-  }
-  // Ensure instance for each media bundle.
-  foreach ($file_types as $bundle) {
-    $field['bundle'] = $bundle;
-    _media_browser_plus_ensure_instance($field);
-  }
-}
-
-/**
- * Create a field, unless it exists already.
- *
- * Note that it's not necessary to check field type here, as that's done in the
- * requirements step.
- *
- * @param array $field
- *   The field definition.
- */
-function _media_browser_plus_ensure_field($field) {
-  $existing_field = field_info_field($field['field_name']);
-  if (empty($existing_field)) {
+  $field_info = field_info_field($field['field_name']);
+  if (empty($field_info)) {
     field_create_field($field);
   }
-}
 
-/**
- * Creates an instance if this one doesn't already exist.
- *
- * @param array $instance
- *   The field instance.
- */
-function _media_browser_plus_ensure_instance($instance) {
-  $existing_instance = field_info_instance($instance['entity_type'], $instance['field_name'], $instance['bundle']);
-  if (empty($existing_instance)) {
-    field_create_instance($instance);
+  // Backward compatibility handling.
+  // @TODO Version compatibility cleanup.
+  switch (TRUE) {
+    // 23. April 2013 http://drupal.org/node/1977728
+    case function_exists('file_type_load_all'):
+      $file_types = array_keys(file_type_load_all());
+      break;
+
+    // Old.
+    case function_exists('file_type_get_all_types'):
+      $file_types = array_keys(file_type_get_all_types());
+      break;
+
+    // Very old.
+    default:
+      $file_types = array_keys(file_info_file_types());
   }
-}
-
-/**
- * Implements hook_enable().
- */
-function media_browser_plus_enable() {
-  // Save default settings.
-  variable_set('media_media_per_page', 30);
-  variable_set('media_grid_window_height', 400);
-  variable_set('media_page_items_per_page', 10);
-  variable_set('media_browser_plus_thumbnails_as_default_browser', TRUE);
-
-  // Create the media folder.
-  $dir = variable_get('file_default_scheme', 'public') . '://' . variable_get('media_root_folder') . '/';
-  file_prepare_directory($dir, FILE_CREATE_DIRECTORY);
-  $term = media_browser_plus_get_media_root_folder(TRUE);
-  if (is_object($term)) {
-    // Load all media and apply tid of folder if none set.
-    variable_set('media_folder_import_start', 0);
-    $batch = array(
-      'title' => t('Assigning Media to Root Folder'),
-      'operations' => array(
-        array('media_browser_plus_folder_media_import', array($term->tid, $dir)),
-      ),
-      'finished' => 'media_browser_plus_folder_media_import_finished',
-      'file' => drupal_get_path('module', 'media_browser_plus') . '/includes/media_browser_plus.admin.inc',
-    );
-    batch_set($batch);
+  // Ensure instance for each file bundle.
+  foreach ($file_types as $bundle) {
+    $field['bundle'] = $bundle;
+    $instance_info = field_info_instance($field['entity_type'], $field['field_name'], $field['bundle']);
+    if (empty($instance_info)) {
+      field_create_instance($field);
+    }
   }
 }
 
@@ -180,17 +77,71 @@ function media_browser_plus_enable() {
  * Implements hook_uninstall().
  */
 function media_browser_plus_uninstall() {
-  variable_del('media_media_per_page');
-  variable_del('media_grid_window_height');
-  variable_del('media_page_items_per_page');
   variable_del('media_root_folder');
   variable_del('media_browser_plus_thumbnails_as_default_browser');
+  variable_del('media_browser_plus_filesystem_folders');
+  variable_del('media_browser_plus_disable_default_view');
+  variable_del('media_browser_plus_root_folder_tid');
 }
 
 /**
- * Ensure the media_browser_plus fields are attached on all file types.
+ * Implements of hook_requirements().
  */
-function media_browser_plus_update_7001() {
-  _media_browser_plus_ensure_field_folder();
-  _media_browser_plus_ensure_field_tags();
+function media_browser_plus_requirements($phase) {
+  $requirements = array();
+  // Ensure translations don't break during installation.
+  $t = get_t();
+
+  if ($phase == 'runtime') {
+    // Check if we've to rely on and if it's enabled.
+    $result = db_query("SELECT * FROM {system} WHERE name = 'media_bulk_upload' and type = 'module'")->rowCount();
+    if ($result) {
+      $requirements['mbp_media_bulk_upload'] = array(
+        'title' => $t('Media Browser Plus: Media Bulk Upload enabled'),
+        'value' => $t('Media Browser Plus needs Media Bulk Upload to work properly.'),
+        'severity' => REQUIREMENT_OK,
+      );
+      if (!module_exists('media_bulk_upload')) {
+        $requirements['mbp_media_bulk_upload']['severity'] = REQUIREMENT_WARNING;
+        $requirements['mbp_media_bulk_upload']['value'] .= $t(
+          ' (Enable the module in the !module_admin_link)',
+          array('!module_admin_link' => l($t('module administration'), 'admin/modules'))
+        );
+      }
+    }
+
+    $requirements['mbp_archiver'] = array(
+      'title' => $t('Media Browser Plus: Archiver found'),
+      'value' => $t('Media Browser Plus needs an archiver to provide multifile downloads.'),
+      'severity' => REQUIREMENT_OK,
+    );
+    if (!count(archiver_get_info())) {
+      $requirements['mbp_archiver']['severity'] = REQUIREMENT_WARNING;
+      $requirements['mbp_archiver']['value'] .= l($t('(further information)'), 'https://api.drupal.org/api/drupal/modules%21system%21system.api.php/function/hook_archiver_info/7');
+    }
+  }
+  return $requirements;
+}
+
+/**
+ * Update from 2.x to 3.x branch.
+ */
+function media_browser_plus_update_7300() {
+  // Set weight.
+  db_query("UPDATE {system} SET weight = 11 WHERE name = 'media_browser_plus'");
+
+  // Fetch the media root term and store it in the related variable.
+  $results = taxonomy_get_term_by_name('Media Root', 'media_folders');
+  if (!empty($results)) {
+    $root_folder = reset($results);
+  }
+  variable_set('media_browser_plus_root_folder_tid', $root_folder->tid);
+
+  // Remove legacy variables.
+  variable_del('media_media_per_page');
+  variable_del('media_grid_window_height');
+  variable_del('media_page_items_per_page');
+
+  // Make sure the dependency modules are enabled.
+  module_enable(array('views_tree', 'views_bulk_operations'));
 }
